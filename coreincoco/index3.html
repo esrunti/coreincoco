@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreInCOCO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <!-- バナー画像 -->
+        <div class="out-container">
+            <div class="container">
+                <div class="banner-container">
+                    <img src="img/top_banner.png">
+                    <div class="banner-text">
+                        CORE IN COCO
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 入れたい場所入力 -->
+        <div class="out-container">
+            <div class="container">
+                <form name="target_data" onsubmit="return false;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="subheader">
+                                <h3>ココに!!!</h3>
+                                <h5>入れたい場所を教えて</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 my-2 width-input">
+                                <label class="form-label width-input-label" for="target_min_length">最小幅</label>
+                                <input type="text" class="form-control" name="target_min_length" id="target_min_length">
+                            </div>
+                        
+                        <div class="col-sm-6 my-2 width-input">
+                                <label class="form-label width-input-label" for="target_max_length">最大幅</label>
+                                <input type="text" class="form-control" name="target_max_length" id="target_max_length">
+                            
+                        </div>
+                        <div class="col-12 my-2">
+                            <input type="submit" class="btn btn-origin m-1" value="設定" onclick="submit_setting()">
+                        </div>
+                        <div class="col-12 my-2">
+                            <p id="outer-setting">設定値：  〜  </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 入れたいもの入力+リスト表示 -->
+        <div class="out-container">
+            <div class="container">
+                <form name="box_data" onsubmit="return false;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="subheader">
+                                <h3>コレを!!!</h3>
+                                <h5>入れたいものを教えて</h5>
+                            </div>
+                        </div>
+                        <div class="col-12 my-2">
+                            <label class="form-label" for="box_name">品名</label>
+                            <input type="text" class="form-control" name="box_name" id="box_name">
+                        </div>
+                        <div class="col-sm-6 my-2 width-input">
+                            <label class="form-label width-input-label">幅</label>
+                            <input type="text" class="form-control" name="box_width" id="">
+                        </div>
+                        <div class="col-sm-6 my-2 width-input">
+                            <input type="checkbox" class="form-check-input box_data_check" id="box_max_num_check" onchange="num_checkbox_changed(this)">
+                            <label class="form-label" for="box_max_num_check">最大個数</label>
+                            <input type="number" class="form-control box_data_input" name="box_max_num" id="" disabled min="0">
+                        </div>
+                        <div class="col-sm-6 my-2 width-input">
+                            <input type="checkbox" class="form-check-input box_data_check" id="box_min_num_check" onchange="num_checkbox_changed(this)">
+                            <label class="form-label" for="box_min_num_check">最小個数</label>
+                            <input type="number" class="form-control box_data_input" name="box_min_num" id="" disabled min="0">
+                        </div>
+                        <div class="col-sm-6 my-2 width-input">
+                            <input type="checkbox" class="form-check-input box_data_check" id="box_price_check" onchange="num_checkbox_changed(this)">
+                            <label class="form-label" for="box_price_check">価格</label>
+                            <input type="number" class="form-control box_data_input" name="box_price" id="" disabled min="0">
+                        </div>
+                        <div class="col-12 my-2">
+                            <input type="button" class="btn btn-origin m-1" value="追加" onclick="resist_input_data()">
+                        </div>
+                    </div>
+                </form>
+                <div class="table-area">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="input_table">
+                            <thead>
+                                <tr>
+                                    <td class="resist">検討<br>対象</td>
+                                    <td class="resist">品名</td>
+                                    <td class="resist">幅</td>
+                                    <td class="resist">最大<br>個数</td>
+                                    <td class="resist">最小<br>個数</td>
+                                    <td class="resist">価格</td>
+                                    <td class="resist">商品<br>削除</td>
+                                </tr>
+                            </thead>
+                            <tbody id="input_table_body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 色の設定 -->
+        <div class="out-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="subheader">
+                            <h5>色を選ぼう</h5>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="container separate-border">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5>2色選んで</h5>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input type="color" id="start-color" value="#FFB74D" style="min-width:60%;">
+                                </div>
+                                <div class="col-sm-12">
+                                    <input type="color" id="end-color" value="#FFA07A" style="min-width:60%;">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="container separate-border">
+                            <div class="col-12">
+                                <h5>色の並び方</h5>
+                            </div>
+                            <form name="color-order-form" onsubmit="return false;">
+                                <div class="col-12">
+                                    <input type="radio" name="color-order" value="ordered-order" checked="true">
+                                    <label for="ordered-order">グラデーション表示</label>
+                                </div><div class="col-12">
+                                    <input type="radio" name="color-order" value="balance-order">
+                                    <label for="balance-order">見やすい表示</label>
+                                </div>
+                                <div class="col-12">
+                                    <input type="radio" name="color-order" value="random-order">
+                                    <label for="random-order">ランダム表示</label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="out-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="button" class="btn btn-origin m-1" value="パターンを検索" onclick="disp_result()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 簡単比較 -->
+        <div class="out-container">
+            <div class="container">
+                <div class="subheader">
+                    <h2>簡単比較</h2>
+                </div>
+                <div class="table-area" id="result-table-area">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody id="box_table">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 詳細比較 -->
+        <div class="out-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>詳細比較</h2>
+                    </div>
+                </div>
+                <div class="row" id="card_area">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
